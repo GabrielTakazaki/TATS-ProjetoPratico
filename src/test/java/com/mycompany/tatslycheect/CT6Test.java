@@ -1,7 +1,7 @@
 package com.mycompany.tatslycheect;
 
-import java.util.ArrayList;
 import com.mycompany.tatslychee.LycheeBasePage;
+import com.mycompany.tatslychee.LycheeLogadoPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
@@ -12,10 +12,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class CT1Test {
+
+public class CT6Test {
 
     private WebDriver driver;
     private LycheeBasePage lycheePage;
+    private LycheeLogadoPage lycheeLogado;
 
     @BeforeClass
     public static void beforeClass() {
@@ -33,14 +35,21 @@ public class CT1Test {
     public void after() {
         driver.close();
     }
-
     @Test
-    public void Ct1InfoPageTest() {
+    public void Ct6ImagemImport() throws InterruptedException {
+        String url = "https://www.aprenderexcel.com.br//imagens/post/385/2901-1.jpg";
+        String classImg = "photo";
         lycheePage = new LycheeBasePage(driver);
         assertEquals("Albums", lycheePage.getTitle());
-        lycheePage.entryInfoPage();
-        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-        assertEquals("https://lychee.electerious.com/", driver.getCurrentUrl());
+        lycheePage.LoginEntry();
+        lycheePage.setLogin("teste");
+        lycheePage.setPassw("utfpr");
+        lycheePage.login();
+        lycheeLogado = new LycheeLogadoPage(driver);
+        Thread.sleep(1000);
+        assertEquals("header__toolbar header__toolbar--public", lycheeLogado.getLogado());
+        lycheeLogado.clickAddPhotoLink(url);
+        Thread.sleep(10000);
+        assertEquals(lycheeLogado.getClassPhoto(), classImg);
     }
 }

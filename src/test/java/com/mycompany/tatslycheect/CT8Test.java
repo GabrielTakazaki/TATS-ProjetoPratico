@@ -1,7 +1,6 @@
 package com.mycompany.tatslycheect;
-
-import java.util.ArrayList;
 import com.mycompany.tatslychee.LycheeBasePage;
+import com.mycompany.tatslychee.LycheeLogadoPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
@@ -12,10 +11,11 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class CT1Test {
+public class CT8Test {
 
     private WebDriver driver;
     private LycheeBasePage lycheePage;
+    private LycheeLogadoPage lycheeLogado;
 
     @BeforeClass
     public static void beforeClass() {
@@ -33,14 +33,27 @@ public class CT1Test {
     public void after() {
         driver.close();
     }
-
     @Test
-    public void Ct1InfoPageTest() {
+    public void Ct8trocarUsuarioTest() throws InterruptedException {
         lycheePage = new LycheeBasePage(driver);
         assertEquals("Albums", lycheePage.getTitle());
-        lycheePage.entryInfoPage();
-        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-        assertEquals("https://lychee.electerious.com/", driver.getCurrentUrl());
+        lycheePage.LoginEntry();
+        lycheeLogado = lycheePage
+                .setLogin("teste1")
+                .setPassw("12345")
+                .login();
+        Thread.sleep(1000);
+        assertEquals("header__toolbar header__toolbar--public", lycheeLogado.getLogado());
+        lycheeLogado.changeLogin("12345", "teste1", "12345");
+        Thread.sleep(1000);
+        lycheeLogado.sair();
+        assertEquals("Albums", lycheePage.getTitle());
+        lycheePage.LoginEntry();
+        lycheeLogado = lycheePage
+                .setLogin("teste1")
+                .setPassw("12345")
+                .login();
+        Thread.sleep(1000);
+        assertEquals("header__toolbar header__toolbar--public", lycheeLogado.getLogado());
     }
 }

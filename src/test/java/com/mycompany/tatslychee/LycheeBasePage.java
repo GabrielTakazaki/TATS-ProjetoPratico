@@ -27,9 +27,6 @@ public class LycheeBasePage extends BasePage {
     @FindBy(id = "basicModal__action")
     WebElement buttonEnter;
 
-    @FindBy(id = "basicModal__cancel")
-    WebElement buttonCancel;
-
     @FindBy(xpath = "/html/head/title")
     WebElement newPage;
 
@@ -39,6 +36,10 @@ public class LycheeBasePage extends BasePage {
     public LycheeBasePage(WebDriver driver) {
         super(driver);
         driver.get("http://192.168.0.110/");
+    }
+
+    public void LoginEntry() {
+        buttonsign.click();
     }
 
     public LycheeBasePage setLogin(String login) {
@@ -53,20 +54,13 @@ public class LycheeBasePage extends BasePage {
         return this;
     }
 
-    public void LoginEntry() {
-        buttonsign.click();
+    public LycheeLogadoPage login() {
+        buttonEnter.click();
+        return new LycheeLogadoPage(driver);
     }
 
     public void entryInfoPage() {
         infopage.click();
-    }
-
-    public void login() {
-        buttonEnter.click();
-    }
-
-    public void cancel() {
-        buttonCancel.click();
     }
 
     public String getTitle() {
@@ -82,11 +76,7 @@ public class LycheeBasePage extends BasePage {
     }
 
     public String getError() {
-        try {
-            driver.wait(3000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(LycheeBasePage.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return error.getAttribute("class");
     }
+
 }
