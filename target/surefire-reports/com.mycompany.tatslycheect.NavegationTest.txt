@@ -1,12 +1,12 @@
 -------------------------------------------------------------------------------
-Test set: com.mycompany.totslycheect.CT1Test
+Test set: com.mycompany.tatslycheect.NavegationTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 7.463 sec <<< FAILURE!
-Ct2InvalidLoginTest(com.mycompany.totslycheect.CT1Test)  Time elapsed: 4.846 sec  <<< ERROR!
-java.lang.IllegalMonitorStateException
-	at java.lang.Object.wait(Native Method)
-	at com.mycompany.totslychee.LycheeBasePage.getError(LycheeBasePage.java:86)
-	at com.mycompany.totslycheect.CT1Test.Ct2InvalidLoginTest(CT1Test.java:53)
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 14.579 sec <<< FAILURE!
+testInfoPageCt1(com.mycompany.tatslycheect.NavegationTest)  Time elapsed: 11.003 sec  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[Lychee — Self-hosted photo-management done right]> but was:<[https://lychee.electerious.com/]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at com.mycompany.tatslycheect.NavegationTest.testInfoPageCt1(NavegationTest.java:40)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

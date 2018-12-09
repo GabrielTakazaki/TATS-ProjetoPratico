@@ -46,8 +46,8 @@ public class CT5Test {
         lycheePage.login();
         lycheeLogado = new LycheeLogadoPage(driver);
         Thread.sleep(1000);
-        assertEquals("header__toolbar header__toolbar--public", lycheeLogado.getLogado());
+        assertEquals("header__toolbar header__toolbar--public",lycheeLogado.getLogado());
         lycheeLogado.clickAddPhotoLink(url);
-        assertEquals(lycheeLogado.getErrorPhoto(), errorUrl);
+        assertEquals(errorUrl, lycheeLogado.getErrorPhoto());
     }
 }

@@ -11,23 +11,28 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class CT2Test {
 
-    private WebDriver driver;
     private LycheeBasePage lycheePage;
     private LycheeLogadoPage lycheeLogado;
+    private WebDriver driver;
 
     @BeforeClass
     public static void beforeClass() {
         WebDriverManager.chromedriver().setup();
-
     }
 
     @Before
     public void before() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("headless");
+        chromeOptions.addArguments("window-size=1200x600");
+        chromeOptions.addArguments("lang=en-US");
+        chromeOptions.addArguments("start-maximized");
+        driver = new ChromeDriver(chromeOptions);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);     
     }
 
     @After
@@ -35,16 +40,15 @@ public class CT2Test {
         driver.close();
     }
 
-    
     @Test
     public void Ct2InvalidLoginTest() throws InterruptedException {
         lycheePage = new LycheeBasePage(driver);
         assertEquals("Albums", lycheePage.getTitle());
         lycheePage.LoginEntry();
         lycheeLogado = lycheePage
-            .setLogin("erro")
-            .setPassw("erro")
-            .login(); 
+                .setLogin("erro")
+                .setPassw("erro")
+                .login();
         Thread.sleep(1000);
         assertEquals("basicModal basicModal--shake", lycheePage.getError());
     }
