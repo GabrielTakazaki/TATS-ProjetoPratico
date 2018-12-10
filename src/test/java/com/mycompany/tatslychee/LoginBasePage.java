@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginBasePage extends BasePage {
+
     @FindBy(name = "username")
     WebElement user;
 
@@ -19,7 +20,7 @@ public class LoginBasePage extends BasePage {
 
     @FindBy(xpath = "/html/body/div[7]/div")
     WebElement error;
-    
+
     public LoginBasePage(WebDriver driver) {
         super(driver);
     }
@@ -28,26 +29,30 @@ public class LoginBasePage extends BasePage {
         user.clear();
         user.sendKeys(login);
     }
-    
-    public void setSenha (String senha) {
+
+    public void setSenha(String senha) {
         password.clear();
         password.sendKeys(senha);
     }
 
     public String loginError() {
         clickMenuOption(buttonEnter);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("error")));
         return error.getAttribute("class");
     }
 
     public MenuLogadoPage loginOk() {
         clickMenuOption(buttonEnter);
-        return new MenuLogadoPage (driver);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("divider")));
+        return new MenuLogadoPage(driver);
     }
-        public void clickMenuOption(WebElement menuOption) {
+
+    public void clickMenuOption(WebElement menuOption) {
 
         menuOption.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(menuOption));
-        menuOption.click();
     }
 }
