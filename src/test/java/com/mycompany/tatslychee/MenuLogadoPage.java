@@ -36,6 +36,24 @@ public class MenuLogadoPage extends InicioBasePage {
 
     @FindBy(xpath = "/html/body/div[2]/div[1]")
     WebElement imgClass;
+    
+    @FindBy(xpath = "//*[@id=\"button_settings\"]")
+    WebElement config;
+    @FindBy(xpath = "/html/body/div[6]/div/table/tbody/tr[1]")
+    WebElement changeUser;
+    @FindBy(xpath = "/html/body/div[6]/div/div[1]/p[1]/input")
+    WebElement oldPassword;
+    @FindBy(xpath = "/html/body/div[6]/div/div[1]/p[2]/input[1]")
+    WebElement newUser;
+    @FindBy(xpath = "/html/body/div[6]/div/div[1]/p[2]/input[2]")
+    WebElement newPassw;
+    @FindBy(xpath = "/html/body/div[6]/div/table/tbody/tr[9]")
+    WebElement signOut;
+    @FindBy(xpath = "//*[@id=\"basicModal__action\"]")
+    WebElement confirmChange;
+
+    @FindBy(xpath = "/html/body/div[6]/div/table/tbody/tr[7]/td")
+    WebElement album;
 
     public MenuLogadoPage(WebDriver driver) {
         super(driver);
@@ -98,4 +116,33 @@ public class MenuLogadoPage extends InicioBasePage {
     public String getErrorPhoto() {
         return errorMsg.getText();
     }
+    public void changeLogin(String oldPass, String newUs, String newPa) {
+        config.click();
+        changeUser.click();
+        oldPassword.clear();
+        oldPassword.sendKeys(oldPass);
+        newUser.clear();
+        newUser.sendKeys(newUs);
+        newPassw.clear();
+        newPassw.sendKeys(newPa);
+        confirmChange.click();
+    }
+    public HomePage sair() {
+        config.click();
+        signOut.click();
+        return new HomePage(driver);
+    }
+    public AlbumPage newAlbum(String nome) throws InterruptedException {
+        addPhotos.click();
+        Thread.sleep(1000);
+        album.click();
+        inputName.clear();
+        inputName.sendKeys(nome);
+        confirm.click();
+        
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.titleIs("Lychee - "+nome));
+        return new AlbumPage(driver);
+    }
+    
 }

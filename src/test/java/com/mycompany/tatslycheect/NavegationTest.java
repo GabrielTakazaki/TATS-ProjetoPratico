@@ -36,7 +36,7 @@ public class NavegationTest {
     public void after() {
         driver.close();
     }
-    /*
+    
     @Test
     public void InfoPageCt1test() {
         HomePage homePage = new HomePage(driver);
@@ -119,5 +119,47 @@ public class NavegationTest {
         assertEquals("Unsorted", album.getTitle());
         album.apagarFoto();
         assertNotEquals("content ui-sortable contentZoomIn view", album.getImagemApagada());
-    }*/
+    }
+    @Test
+    public void TrocarUsuarioCt8test() {
+        HomePage homePage = new HomePage(driver);
+        LoginBasePage loginPage = homePage.getMenu().loginPage();
+        loginPage.setLogin(login);
+        loginPage.setSenha(senha);  
+        MenuLogadoPage logadoPage = loginPage.loginOk();
+        assertEquals("header__toolbar header__toolbar--public", logadoPage.getLogado());
+        logadoPage.changeLogin("12345", "teste1", "12345");
+        homePage = logadoPage.sair();
+        loginPage = homePage.getMenu().loginPage();
+        loginPage.setLogin("teste1");
+        loginPage.setSenha("12345");  
+        logadoPage = loginPage.loginOk();
+        assertEquals("header__toolbar header__toolbar--public", logadoPage.getLogado());
+     }
+    @Test
+    public void CriarAlbumCt9test() throws InterruptedException {
+        String newAlbum = "teste9";
+        HomePage homePage = new HomePage(driver);
+        LoginBasePage loginPage = homePage.getMenu().loginPage();
+        loginPage.setLogin(login);
+        loginPage.setSenha(senha);  
+        MenuLogadoPage logadoPage = loginPage.loginOk();
+        assertEquals("header__toolbar header__toolbar--public", logadoPage.getLogado());
+        AlbumPage album = logadoPage.newAlbum(newAlbum);
+        assertEquals(newAlbum,album.getTitle());
+    }
+    @Test
+    public void ShareAlbumCt10test() throws InterruptedException {
+        String newAlbum = "sharealbum";
+        HomePage homePage = new HomePage(driver);
+        LoginBasePage loginPage = homePage.getMenu().loginPage();
+        loginPage.setLogin(login);
+        loginPage.setSenha(senha);  
+        MenuLogadoPage logadoPage = loginPage.loginOk();
+        assertEquals("header__toolbar header__toolbar--public", logadoPage.getLogado());
+        AlbumPage album = logadoPage.newAlbum(newAlbum);
+        assertEquals(newAlbum,album.getTitle());
+        album.shareAlbum("12345");
+        assertEquals(album.getDescricao(), "topicos em teste");
+    }
 }
